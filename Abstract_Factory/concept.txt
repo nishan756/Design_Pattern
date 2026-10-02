@@ -1,0 +1,90 @@
+যদি এমন কোন সমস্যা দেখা দেয় যেখানে আমাদের কোন অব্জেক্ট এর সাথে রিলেটেড অব্জেক্ট প্রয়োজন অর্থাৎ
+
+অব্জেক্ট ফ্যামিলি দরকার তখন Abstract Factory Design Pattern ব্যাবহার করা হয়।
+
+মেইন ফ্যাক্টরি ইন্টারফেস এ প্রয়োজনীয় মেথড রাখতে হবে যা রিলেটেড অব্জেক্ট রিটার্ন করবে এবং 
+
+সেই ইন্টারফেস দিয়ে চাইল্ড ক্লাস তৈরি করতে হবে। 
+
+যেমন ঃ আমরা একটি GUI বানাতে চাই যা LightGUI and DarkGUI both support করবে। DarkGUI 
+
+এর জন্য DarkButton and DarkCheckbox ও LightGUI এর জন্য LightButton and LightCheckBox
+
+পাওয়া যাবে। 
+
+interface GUIFactory {
+
+    public Button createButton();
+
+    public CheckBox createCheckBox();
+}
+
+class LightGUIFactory implements GUIFactory {
+
+    @Override
+    public Button createButton(){
+        return new LightButton();
+    }
+
+    @Override
+    public CheckBox createCheckBox(){
+
+        return new LightCheckBox();
+    }
+}
+
+class DarkGUIFactory implements GUIFactory {
+
+    @Override
+    public Button createButton(){
+        return new DarkButton();
+    }
+
+    @Override
+    public CheckBox createCheckBox(){
+
+        return new DarkCheckBox();
+    }
+}
+
+interface Button {
+
+    public void render();
+}
+
+class LightButton implements Button {
+
+    @Override
+    public void render(){
+        System.out.println("Rendering light button");
+    }
+}
+
+class DarkButton implements Button {
+
+    @Override
+    public void render(){
+        System.out.println("Rendering dark button");
+    }
+}
+
+interface CheckBox {
+
+    public void render();
+}
+
+class LightCheckBox implements Button {
+
+    @Override
+    public void render(){
+        System.out.println("Rendering light checkbox");
+    }
+}
+
+class DarkCheckbox implements Button {
+
+    @Override
+    public void render(){
+        System.out.println("Rendering dark checkbox");
+    }
+}

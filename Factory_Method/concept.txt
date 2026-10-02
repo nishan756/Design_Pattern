@@ -1,0 +1,39 @@
+Factory Design Pattern এ একটি Factory Class ইউজার থেকে ইনপুট নিয়ে সেই ইনপুট অনুযায়ী
+
+কোন অব্জেক্ট রিটার্ন করতো। এই ক্ষেত্রে অনেক বেশি if / else if / else দরকার হয়। যদি নতুন কোন 
+
+ক্লাস তৈরি করা হয় তাহলে আবার নতুন করে আরেকটি else if ব্লক অ্যাড করতে হবে। সেই সমস্যা দূর 
+
+করতে FactoryMethod ব্যাবহার করা হয় এবং সাথে Object creation-কে superclass-এর একটি method থেকে
+subclasses-এ delegate করা হয়। 
+
+
+মূল কন্সেপ্ট ঃ শুধুমাত্র একটি SuperClass এর মাধ্যমে একাধিক Object Return করার পরিবর্তে প্রতিটি ক্লাসের 
+
+জন্য আলাদা ফ্যাক্টরি ক্লাস তৈরি করা হয়। এক্ষেত্রে একটি interface থাকবে যা শুধু Factory class এর মেথড
+
+ডিফাইন করবে। বাকি কাজ করবে চাইল্ড ক্লাস। 
+
+যেমন ঃ 
+interface PaymentFactory {
+
+    public Payment createPayment();
+}
+
+class BkashPaymentFactory implements PaymentFactory {
+
+    @Override
+    public Payment createPayment(){
+
+        return new BkashPayment();
+    }
+}
+
+class NagadPaymentFactory implements PaymentFactory {
+
+    @Override
+    public Payment createPayment(){
+
+        return new NagadPayment();
+    }
+}

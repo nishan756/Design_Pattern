@@ -1,0 +1,89 @@
+Prototype design pattern হলো Creational deign pattern যার মূল কন্সেপ্ট হচ্ছে একদম স্ক্র্যাচ 
+
+থেকে অব্জেক্ট তৈরি না করে অন্য অব্জেক্ট কপি করে নেয়া। 
+
+যে কারনে এই ডিজাইন প্যাটার্ন ব্যাবহার করা উচিত?
+১) অব্জেক্ট ক্রিয়েশন খুব কমপ্লেক্স হলে
+২) প্রতিটা অব্জেক্ট এর কনফিগারেশন একই বা প্রায় একই হলে 
+৩) অব্জেক্ট তৈরি করতে খুব সময় লাগবে এমন হলে
+
+ধাপ ঃ 
+১) প্রথমে একটি prototype interface তৈরি করতে হবে যাতে clone() method থাকবে। 
+২) মেইন কনক্রিট ক্লাস তৈরি করতে হবে এবং prototype interface implements করতে হবে। 
+৩) কন্সট্রাক্টর দুইটা থাকবে। একটি কন্সট্রাক্টর একদম স্ক্র্যাচ থেকে অব্জেক্ট তৈরি করবে এবং অন্যটি
+কপি অব্জেক্ট প্যারামিটার হসেবে নিয়ে নতুন অব্জেক্ট ইনিশিয়ালাইজ করবে। তবে এই কন্সট্রাক্টর private থাকবে। 
+৪) ক্লোন করা অব্জেক্ট দিয়ে নতুন অব্জেক্ট তৈরি করার জন্য clone() method ব্যাবহার করতে হবে। 
+৫) যদি কোন ভ্যালু চেঞ্জ করতে হয় তবে সেই ক্ষেত্রে setter method ব্যাবহার করা যায়। কিন্তু অনেকগুলো
+ভ্যালু চেঞ্জ করার জন্য এই পদ্ধতি বেশি কার্যকর নয়। 
+
+
+Shallow Copy vs Deep Copy
+-------------------------
+
+Immutable Object : Immutable object হলো এমন অব্জেক্ট যা তৈরি হওয়ার পরে ইন্টার্নালি চেঞ্জ করা যায় না। 
+
+Mutable Object : Object তৈরি হওয়ার পরেও চেঞ্জ করা যায়।
+
+Shallow Copy তে immutable object normally copy হয়ে যায়, কিন্তু mutable object এর ক্ষেত্রে 
+একই ভ্যালু শেয়ার করতে পারে। অর্থাৎ , যদি কোন অব্জেক্ট এর মধ্যে পরিবর্তন নিয়ে আসা হয় তাহলে
+অন্য অব্জেক্ট এও চেঞ্জ হয়ে যাবে। 
+
+Deep copy তে mutable object ও normally copy হয়ে যাবে। অর্থাৎ , কোন অব্জেক্ট পরিবর্তন
+করলে অন্য কোন অব্জেক্ট এ প্রভাব পড়বে না। 
+
+solution : 
+নতুন অব্জেক্ট তৈরি করে কপি করতে হবে। 
+
+example : 
+
+public interface ProtoType<T> {
+
+    public T clone();
+
+}
+
+public class GameCharacter implements ProtoType<GameCharacter>{
+
+    private String name;
+    private String weapon;
+    private int attackPower;
+
+    public GameCharacter(String name , String weapon , int attackPower){
+
+        this.name = name;
+        this.weapon = weapon;
+        this.attackPower = attackPower;
+    }
+
+    private GameCharacter(GameCharacter gbc){
+
+        this.name = gbc.name;
+        this.weapon = gbc.weapon;
+        this.attackPower = gbc.attackPower;
+
+    }
+
+    @Override
+    public GameCharacter clone(){
+        return new GameCharacter(this);
+    }
+}
+
+
+public class Main{
+
+    public static void main(String[] args){
+
+        GameCharacter gbc1 = new GameCharacter("Nishan" , "AK47" , 1000);
+
+        GameCharacter gbc2 = gbc1.clone();
+
+        /* 
+        যখন gbc1.clone() কল করছি তখন clone() method private constructor() 
+        method কে কল করে this(gbc) কে আরগুমেন্ট হিসেবে পাঠাচ্ছে এবং নতুন অব্জেক্ট তৈরি করে 
+        gbc2 reference এ স্টোর করছে।  
+
+        */
+
+    }
+}

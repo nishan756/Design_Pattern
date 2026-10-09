@@ -1,0 +1,61 @@
+Dcorator Design Pattern হলো স্ট্রাকচারাল ডিজাইন প্যাটার্ন যা কোন অব্জেক্টে নতুন 
+
+বিহেভিয়ার অ্যাড করতে ব্যাবহার করা হয় এক্সিস্টিং কোড পরিবর্তন করা ছাড়া। 
+
+সমস্যা ঃ 
+
+ধরা যাক , একটি রিচ টেক্সট এডিটর তৈরি করবো। সেখানে, I, B, U etc feature থাকবে। যদি প্রতিটি
+
+সম্ভ্যাব্য কম্বিনেশন এর জন্য ক্লাস / ইন্টারফেস তৈরি করতে চাই তাহলে মাল্টিপল ক্লাস তৈরি করতে হবে 
+
+যা পরে মেইন্টেইন করা কঠিন হবে। সেই জন্য Decorator Design Pattern ব্যাবহার করা হয়। 
+
+এই প্যাটার্নে এক্সিস্টিং অব্জেক্ট নিয়ে সেটিকে র‍্যাপ করে নতুন ফিচার দেয়া হয়। 
+
+example : 
+
+//ইন্টারফেস ক্লাস যা টেক্সট দেখার জন্য বেসিক মেথড প্রোভাইড করে। 
+
+public interface TextView {
+
+    public String viewText();
+}
+
+// PlainTextView class যা শুধুমাত্র PlainText দেখাবে। 
+
+public class PlainTextView implements TextView {
+
+    private final String text;
+
+    public PlainTextView(String text){
+        this.text = text;
+    }
+
+    @Override
+    public String viewText(){
+        return this.text;
+    }
+}
+
+// Decorator Class যা এক্সিস্টিং টেক্সট নিয়ে সেটিকে Wrap করবে। 
+
+public abstract class TextDecorator implements TextView {
+
+    protected final TextView text;
+
+    public TextDecorator(TextView text){
+        this.text = text;
+    }
+}
+
+public class BoldDecorator extends TextDecorator{
+
+    public BoldDecorator(TextView text){
+        super(text);
+    }
+
+    @Override
+    public String viewText() {
+        return "<b>" + this.text.viewText() + "</b>";
+    }
+}

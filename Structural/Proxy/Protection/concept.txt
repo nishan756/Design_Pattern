@@ -1,0 +1,15 @@
+যদি এমন কোন অব্জেক্ট এক্সেস করে কোন অপারেশন করার প্রয়োজন হয় যার জন্য 
+
+Authentication / Authorization দরকার, তখন Protection Proxy Design Pattern ব্যাবহার করা হয়। 
+
+Procedure : 
+
+১) সবার আগে মেইন ক্লাস তৈরি করতে হবে। 
+
+২) একটি Proxy ক্লাস তৈরি করতে হবে যেখানে Main class এর সাথে Has-A relationship এবং 
+
+Mian class এর সমস্তকিছু এখানে থাকবে
+
+৩) Main class এর যে মেথড বা প্রোপার্টি এক্সেস করতে Authentication / Authorization দরকার সে মেথডটি 
+
+পার্ফরম করার আগে একটি সিকিউরিটি লেয়ার অ্যাড করতে হবে। 
